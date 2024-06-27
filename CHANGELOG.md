@@ -2,7 +2,7 @@
 
 ## Added
 
-- Newrelic integration
+- Newrelic integration, if no newrelic config is added, it will not be used.
 
 # 2.0.0.
 
