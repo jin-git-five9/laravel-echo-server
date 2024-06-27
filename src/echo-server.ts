@@ -1,3 +1,4 @@
+const nr = require('newrelic');
 import { HttpSubscriber, RedisSubscriber, Subscriber } from './subscribers';
 import { Channel } from './channels';
 import { Server } from './server';
@@ -216,7 +217,10 @@ export class EchoServer {
      */
     onSubscribe(socket: any): void {
         socket.on('subscribe', data => {
-            this.channel.join(socket, data);
+            let self = this;
+            nr.startWebTransaction('/websocket/subscribe', function transactionHandler() {
+                self.channel.join(socket, data);
+            });
         });
     }
 
@@ -225,7 +229,10 @@ export class EchoServer {
      */
     onUnsubscribe(socket: any): void {
         socket.on('unsubscribe', data => {
-            this.channel.leave(socket, data.channel, 'unsubscribed');
+            let self = this;
+            nr.startWebTransaction('/websocket/unsubscribe', function transactionHandler() {
+                self.channel.leave(socket, data.channel, 'unsubscribed');
+            });
         });
     }
 
@@ -236,7 +243,10 @@ export class EchoServer {
         socket.on('disconnecting', (reason) => {
             Object.keys(socket.rooms).forEach(room => {
                 if (room !== socket.id) {
-                    this.channel.leave(socket, room, reason);
+                    let self = this;
+                    nr.startWebTransaction('/websocket/disconnect', function transactionHandler() {
+                        self.channel.leave(socket, room, reason);
+                    });
                 }
             });
         });
@@ -247,7 +257,10 @@ export class EchoServer {
      */
     onClientEvent(socket: any): void {
         socket.on('client event', data => {
-            this.channel.clientEvent(socket, data);
+            let self = this;
+            nr.startWebTransaction('/websocket/clientevent', function transactionHandler() {
+                self.channel.clientEvent(socket, data);
+            });
         });
     }
 }
