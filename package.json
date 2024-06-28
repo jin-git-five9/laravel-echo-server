@@ -1,6 +1,6 @@
 {
   "name": "@jin-git-five9/laravel-echo-server",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Laravel Echo Node JS Server for Socket.io",
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "inquirer": "^7.1.0",
     "ioredis": "^4.16.0",
     "lodash": "^4.17.15",
+    "newrelic": "^8.17.1",
     "request": "^2.88.2",
     "socket.io": "^2.3.0",
     "yargs": "^15.3.1"

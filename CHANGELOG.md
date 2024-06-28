@@ -1,3 +1,9 @@
+# 2.0.2
+
+## Fixed
+
+- fix no newrelic package present
+
 # 2.0.1
 
 ## Added
